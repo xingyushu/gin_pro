@@ -154,3 +154,56 @@ func main() {
 	
 // }
 ```
+
+
+## 　4．gin  分组路由
+
+```
+func (*RouterGroup) Group  定义了一组前缀相似的路由，定义各自的处理方法
+func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup
+Group creates a new router group. You should add all the routes that have common middlewares or the same path prefix. For example, all the routes that use a common middleware for authorization could be grouped.
+
+```
+
+```
+package main  
+
+import  "github.com/gin-gonic/gin"
+
+func main() {
+	r :=gin.Default()
+
+	v1 :=r.Group("/v1")
+	{
+		v1.GET("/read",func (c *gin.Context) {
+			c.String(200,"hello v1")
+		})
+	}
+
+	v2 :=r.Group("/v2")
+	{
+	v2.GET("/login",func (c *gin.Context) {
+			c.String(200,"hello v2")
+		})
+	}
+
+	v3 :=r.Group("/v3")
+	{
+	v3.GET("/name",func (c *gin.Context) {
+			c.String(200,"hello v3")
+		})
+	}
+
+	r.Run()
+}
+
+
+// 浏览器输入http://127.0.0.1:8080/v1/read
+// 输出hello v1
+
+// 浏览器输入http://127.0.0.1:8080/v2/login
+// 输出hello v2
+
+// 浏览器输入http://127.0.0.1:8080/v3/name
+// 输出hello v3
+```
