@@ -38,3 +38,20 @@ c.JSON(http.StatusOK, map[string]interface{}{ "status": "登录成功"})
  ```
  {"info":{"name":"Mike","status":"login successfully"},"message":"Mike coding"}
  ```
+ 
+ ## 　2．对gin结构的理解
+ ```
+ package main
+ import "github.com/gin-gonic/gin"
+　func main() {
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run()
+}
+```
+简单几行代码，就能实现一个web服务。使用gin的Default方法创建一个路由handler。然后通过HTTP方法绑定路由规则和路由函数。不同于net/http库的路由函数，gin进行了封装，把request和response都封装到gin.Context的上下文环境。最后是启动路由的Run方法监听端口。麻雀虽小，五脏俱全。当然，除了GET方法，gin也支持POST,PUT,DELETE,OPTION等常用的restful方法。
+
