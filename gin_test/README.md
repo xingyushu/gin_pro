@@ -8,7 +8,7 @@
  
  https://github.com/gin-gonic/gin
 
-＃　１　对gin.H的理解
+## 　１．对gin.H的理解
 
 // H is a shortcut for map[string]interface{}
 type H map[string]interface{}
