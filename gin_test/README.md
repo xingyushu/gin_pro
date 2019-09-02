@@ -207,3 +207,42 @@ func main() {
 // 浏览器输入http://127.0.0.1:8080/v3/name
 // 输出hello v3
 ```
+
+
+## 　5．gin  数据解析绑定
+
+模型绑定可以将请求体绑定给一个类型,目前支持绑定的类型有 JSON, XML 和标准表单数据(foo=bar&boo=baz)。要注意的是绑定时需要给字段设置绑定类型的标签。比如绑定 JSON 数据时,设置json:"fieldname" 。使用绑定方法时,Gin 会根据请求头中 Content-Type 来自动判断需要解析的类型。如果你明确绑定的类型,你可以不用自动推断,而用 BindWith 方法。你也可以指定某字段是必需的。如果一个字段被binding:"required"修饰而值却是空的,请求会失败并返回错误。
+
+```
+package main
+
+import  "github.com/gin-gonic/gin"
+
+type Login struct {
+	User string   `form:"user"  json:"user" binding:"required"`
+	Password string   `form:"password"  json:"password" binding:"required"`
+}
+
+
+func main() {
+	r :=gin.Default()
+
+	r.POST("/login",func(c *gin.Context) {
+		var json  Login
+		if c.BindJSON(&json) == nil{
+			if json.User == "manu" && json.Password == "123" {
+				c.JSON(200,gin.H{  "status":"Login successfully!"})
+			}else{
+				c.JSON(200,gin.H{
+					"status":"Login Failed!",
+					})
+			}
+		}
+	})
+
+	r.Run()
+}
+```
+
+
+![客官稍等](https://github.com/xingyushu/gin_pro/blob/master/gin_test/images/binjson.png)
