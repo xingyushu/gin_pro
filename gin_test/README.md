@@ -246,3 +246,110 @@ func main() {
 
 
 ![客官稍等](https://github.com/xingyushu/gin_pro/blob/master/gin_test/images/binjson.png)
+
+## 　6．gin  HTML Rendering
+
+### （１）单template
+
+main.go
+
+```
+package main   
+ 
+import  "github.com/gin-gonic/gin"
+ 
+ 
+func main() {
+	r :=gin.Default()
+	r.LoadHTMLGlob("templates/*")
+	r.GET("/index",func(c *gin.Context) {
+		c.HTML(200,"index.tmpl",gin.H{
+				"title":"Main site",
+			})
+	})
+ 
+ 
+	r.Run()
+}
+```
+
+templates/index.tmpl
+
+```
+<html>
+	<h1>
+		{{ .title }}
+	</h1>
+</html>
+```
+
+### （2）不同路径template
+
+main.go
+```
+package main  
+ 
+import (
+	 "github.com/gin-gonic/gin"
+	 "net/http"
+)
+ 
+func main() {
+	r :=gin.Default()
+	r.LoadHTMLGlob("templates/**/*")
+	r.GET("/posts/index",func(c *gin.Context) {
+		c.HTML(200,"posts/index.tmpl",gin.H{
+				"title":"Posts",
+			})
+		
+	})
+ 
+	r.GET("/users/index",func(c *gin.Context) {
+	c.HTML(200,"users/index.tmpl",gin.H{
+				"title":"Users",
+			})
+		
+	})
+ 
+	//重定向网址
+	r.GET("/Redirect", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "http://www.baidu.com/")
+	})
+ 
+    //路径重定向
+	r.GET("/test", func(c *gin.Context) {
+    	c.Request.URL.Path = "/test2"
+    	r.HandleContext(c)
+	})
+ 
+	r.GET("/test2", func(c *gin.Context) {
+    	c.JSON(200, gin.H{"hello": "world"})
+	})
+ 
+	r.Run()
+}
+ ```
+
+
+templates/posts/index.tmpl
+```
+{{ define "posts/index.tmpl" }}
+<html><h1>
+	{{ .title }}
+</h1>
+<p>Using posts/index.tmpl</p>
+</html>
+{{ end }}
+```
+templates/users/index.tmpl
+
+```
+{{ define "users/index.tmpl" }}
+<html><h1>
+	{{ .title }}
+</h1>
+<p>Using users/index.tmpl</p>
+</html>
+{{ end }}
+
+```
