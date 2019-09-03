@@ -244,8 +244,7 @@ func main() {
 }
 ```
 
-
-![客官稍等](https://github.com/xingyushu/gin_pro/blob/master/gin_test/images/binjson.png)
+![Alt text](https://github.com/xingyushu/gin_pro/blob/master/gin_test/images/binjson.png)
 
 ## 　6．gin  HTML Rendering
 
