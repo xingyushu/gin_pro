@@ -8,7 +8,10 @@ func main() {
 	v1 :=r.Group("/v1")
 	{
 		v1.GET("/read",func (c *gin.Context) {
-			c.String(200,"hello v1")
+			c.String(200,"hello v1 reading")
+		})
+		v1.GET("/watch",func (c *gin.Context) {
+			c.String(200,"hello v1  watching")
 		})
 	}
 
