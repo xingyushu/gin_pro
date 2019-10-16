@@ -7,9 +7,7 @@ This is the [gin文档学习实现例子]( https://github.com/xingyushu/gin_pro/
 
 ## 2 gin项目－－blog
 
-
-coding......
-
+主要是gin gorm mysql 实现　
 
 ## 3 gin项目－－数据采集分析系统(原创）
 
